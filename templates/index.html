@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Blockchain</title>
+    <style>
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .block {
+            display: inline-block;
+            width: 300px; /* Adjust block width */
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            background-color: #f0f0f0;
+        }
+        .form-container {
+            display: inline-block;
+            width: 300px; /* Adjust form container width */
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            background-color: #4CAF50; /* Green background color */
+        }
+        .hash, .previous-hash {
+            word-wrap: break-word; /* Wrap long hash values */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form method="POST" action="/add_number">
+                <label for="number">Enter a number:</label><br>
+                <input type="number" id="number" name="number"><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>Blockchain:</h2>
+        {% for block in blockchain.chain %}
+            <div class="block">
+                <p>Index: {{ block.index }}</p>
+                <p>Timestamp: {{ block.timestamp }}</p>
+                <p>Data: {{ block.data.strip('0') }}</p>
+                <p class="hash">Hash: {{ block.hash }}</p> <!-- Apply word-wrap to hash -->
+                <p class="previous-hash">Previous Hash: {{ block.previous_hash }}</p> <!-- Apply word-wrap to previous hash -->
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
