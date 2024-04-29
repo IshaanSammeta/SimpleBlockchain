@@ -67,17 +67,17 @@ socketio = SocketIO(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html', blockchain=blockchain)
+    return render_template('index.html', chain=blockchain.chain)
 
 
 from flask import redirect, url_for
 
-@app.route('/add_number', methods=['POST'])
-def add_number():
-    number = request.form['number']  # Access form data using request.form
+@app.route('/add_data', methods=['POST'])
+def add_data():
+    data = request.form['data']  # Access form data using request.form
     previous_block = blockchain.get_latest_block()
     previous_hash = previous_block.hash
-    new_block = Block(len(blockchain.chain), time(), number, previous_hash)
+    new_block = Block(len(blockchain.chain), time(), data, previous_hash)
     blockchain.proof_of_work(new_block)
 
     if blockchain.add_block(new_block):

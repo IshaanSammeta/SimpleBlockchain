@@ -7,35 +7,42 @@
             text-align: center;
             margin-top: 20px;
         }
+        .block-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust block width */
+            grid-gap: 20px; /* Adjust gap between blocks */
+            justify-items: center; /* Center align blocks horizontally */
+        }
         .block {
-            display: inline-block;
-            width: 300px; /* Adjust block width */
+            width: 100%; /* Set block width to 100% of parent container */
             border: 1px solid #333;
             border-radius: 5px;
             padding: 10px;
-            margin: 10px;
             background-color: #f0f0f0;
         }
         .form-container {
-            display: inline-block;
-            width: 300px; /* Adjust form container width */
+            width: 400px; /* Adjust form container width */
+            margin: 0 auto; /* Center align form container */
             border: 1px solid #333;
             border-radius: 5px;
             padding: 10px;
-            margin: 10px;
             background-color: #4CAF50; /* Green background color */
         }
-        .hash, .previous-hash {
-            word-wrap: break-word; /* Wrap long hash values */
+        .hash, .previous-hash, .data {
+            word-wrap: break-word; /* Wrap long values */
+        }
+        .data {
+            max-width: 90%; /* Limit width of data paragraph */
+            margin: 0 auto; /* Center align */
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="form-container">
-            <form method="POST" action="/add_number">
-                <label for="number">Enter a number:</label><br>
-                <input type="number" id="number" name="number"><br>
+            <form method="POST" action="/add_data">
+                <label for="data">Enter data:</label><br>
+                <input type="text" id="data" name="data"><br> <!-- Change input type to text -->
                 <input type="submit" value="Submit">
             </form>
         </div>
@@ -43,15 +50,17 @@
     
     <div class="container">
         <h2>Blockchain:</h2>
-        {% for block in blockchain.chain %}
-            <div class="block">
-                <p>Index: {{ block.index }}</p>
-                <p>Timestamp: {{ block.timestamp }}</p>
-                <p>Data: {{ block.data.strip('0') }}</p>
-                <p class="hash">Hash: {{ block.hash }}</p> <!-- Apply word-wrap to hash -->
-                <p class="previous-hash">Previous Hash: {{ block.previous_hash }}</p> <!-- Apply word-wrap to previous hash -->
-            </div>
-        {% endfor %}
+        <div class="block-container">
+            {% for block in chain %}
+                <div class="block">
+                    <p>Index: {{ block.index }}</p>
+                    <p>Timestamp: {{ block.timestamp }}</p>
+                    <p class="data">Data: {{ block.data.rstrip('0') }}</p> <!-- Remove trailing zeros from data -->
+                    <p class="hash">Hash: {{ block.hash }}</p> <!-- Apply word-wrap to hash -->
+                    <p class="previous-hash">Previous Hash: {{ block.previous_hash }}</p> <!-- Apply word-wrap to previous hash -->
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>
